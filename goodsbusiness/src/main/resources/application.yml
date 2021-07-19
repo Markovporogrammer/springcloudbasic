@@ -14,3 +14,20 @@ eureka:
     leaseRenewalIntervalInSeconds: 10
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+
+feign:
+  hystrix:
+    enabled: true
+#开启hystrix stream监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+#turbine:
+#  appConfig: 'hystrix-feign-demo'
+#  turbine:
+#    aggregator:
+#      clusterConfig: default
+#    clusterNameExpression: new String("default")

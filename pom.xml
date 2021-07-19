@@ -12,6 +12,9 @@
         <module>eurekabasic</module>
         <module>goodsbusiness</module>
         <module>stockbusiness</module>
+        <module>orderbusiness</module>
+        <module>common</module>
+        <module>stockApi</module>
     </modules>
 
     <parent>
@@ -24,6 +27,9 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
+    <dependencies>
+
+    </dependencies>
 <!--    <build>-->
 <!--        <plugins>-->
 <!--            <plugin>-->

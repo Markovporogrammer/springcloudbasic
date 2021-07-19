@@ -1,8 +1,8 @@
 server:
-  port: 8771
+  port: 8772
 spring:
   application:
-    name: stock
+    name: order
 
 eureka:
   client:
@@ -13,4 +13,4 @@ eureka:
   instance:
     leaseRenewalIntervalInSeconds: 10
     metadataMap:
-      instanceId: ${spring.application.name}:${server.port}
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}

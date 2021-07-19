@@ -1,10 +1,13 @@
 package com.basic.goodsbusiness.controller;
 
+import com.basic.goodsbusiness.command.CommandHelloWorld;
 import com.basic.goodsbusiness.service.StockServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.Future;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
@@ -20,7 +23,15 @@ public class GoodsController {
 
     @RequestMapping(value = "/getStock/{data}" , method = GET)
     public String getStock(@PathVariable String data){
+//        Future<String> s = new CommandHelloWorld("Bob").queue();
+//        Observable<String> s = new CommandHelloWorld("Bob").observe();
+//        System.out.println(1/0);
         //传的data是加密数据
        return stockServiceClient.updateStock(data);
+    }
+
+    @RequestMapping(value = "/hello" , method = GET)
+    public String hello(){
+       return stockServiceClient.hello();
     }
 }
