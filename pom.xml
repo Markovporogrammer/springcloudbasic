@@ -15,6 +15,7 @@
         <module>orderbusiness</module>
         <module>common</module>
         <module>stockApi</module>
+        <module>gatewaybasic</module>
     </modules>
 
     <parent>

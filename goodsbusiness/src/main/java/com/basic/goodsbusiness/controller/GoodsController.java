@@ -3,10 +3,12 @@ package com.basic.goodsbusiness.controller;
 import com.basic.goodsbusiness.command.CommandHelloWorld;
 import com.basic.goodsbusiness.service.StockServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.concurrent.Future;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -30,8 +32,10 @@ public class GoodsController {
        return stockServiceClient.updateStock(data);
     }
 
-    @RequestMapping(value = "/hello" , method = GET)
-    public String hello(){
-       return stockServiceClient.hello();
+    @RequestMapping(value = "/hello")
+    public String hello(HttpRequest httpRequest){
+        List<String> strings = httpRequest.getHeaders().get("X-Request-Id");
+        System.out.println(strings);
+        return stockServiceClient.hello();
     }
 }

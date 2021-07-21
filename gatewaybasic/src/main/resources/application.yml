@@ -1,0 +1,25 @@
+server:
+  port: 8888
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: goods
+          uri: lb://goods #eureka上边的应用名
+          predicates:
+            - Method=POST
+            - Header=X-Request-Id, \d+
+#            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+#            - Cookie=mycookie,mycookievalue
+  application:
+    name: gateway
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    leaseRenewalIntervalInSeconds: 10
+    metadataMap:
+      instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
