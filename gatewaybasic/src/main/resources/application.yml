@@ -2,17 +2,78 @@ server:
   port: 8888
 spring:
   cloud:
-    gateway:
-      routes:
-        - id: goods
-          uri: lb://goods #eureka上边的应用名
-          predicates:
-            - Method=POST
-            - Header=X-Request-Id, \d+
+#    gateway:
+#      routes:
+#        - id: goods
+#          uri: lb://goods #eureka上边的应用名
+#          predicates:
+#            - Path=/hello1
+#            - Method=POST
+#            - Header=X-Request-Id, \d+
 #            - After=2017-01-20T17:42:47.789-07:00[America/Denver]
 #            - Cookie=mycookie,mycookievalue
+#        - id: weight_high
+#          uri: http://localhost:8770/hello1
+#          predicates:
+#          - Weight=group1, 8
+#          filters:
+#          - AddResponseHeader=X-Response-Red, Blue
+#          - filters:
+#          - CircuitBreaker=myCircuitBreaker
+#        - id: weight_low
+#          uri: http://localhost:8771/hello1
+#          predicates:
+#          - Weight=group1, 2
+    gateway:
+      discovery:
+        locator:
+          enabled: true # 开启通过服务中心的自动根据 serviceId 创建路由的功能
+#      default-filters:
+#        - My=true
+      routes:
+        - id: ribbon-route
+          uri: lb://goods
+          order: 0
+          predicates:
+            - Path=/ribbon/**
+#          filters:
+#            - name: Hystrix
+#              args:
+#                name: fallback
+#                fallbackUri: forward:/fallback
+#            - StripPrefix=1 #去掉前缀，具体实现参考StripPrefixGatewayFilterFactory
+          filters:
+            - name: RequestRateLimiter
+              args:
+                # 使用SpEL表达式从Spring容器中获取Bean对象
+                key-resolver: '#{@ipKeyResolver}'
+                # 令牌桶每秒填充平均速率
+                redis-rate-limiter.replenishRate: 1
+                # 令牌桶的上限
+                redis-rate-limiter.burstCapacity: 3
+            - name: Hystrix
+              args:
+                name: fallback
+                fallbackUri: forward:/fallback
+            - StripPrefix=1 #去掉前缀，具体实现参考StripPrefixGatewayFilterFactory
+            - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+
+#            - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+#        - id: feign-route
+#          uri: lb://goods
+#          order: 0
+#          predicates:
+#            - Path=/feign/**
+#          filters:
+#            - StripPrefix=1
+#            - AddResponseHeader=X-Response-Default-Foo, Default-Bar
+
   application:
     name: gateway
+  redis:
+    host: 10.217.33.84
+    port: 6437
+    password: 0fd24099238c1a00
 eureka:
   client:
     register-with-eureka: true
@@ -23,3 +84,10 @@ eureka:
     leaseRenewalIntervalInSeconds: 10
     metadataMap:
       instanceId: ${vcap.application.instance_id:${spring.application.name}:${spring.application.instance_id:${server.port}}}
+logging:
+  level:
+    org.springframework.cloud.gateway: trace
+    org.springframework.http.server.reactive: trace
+    org.springframework.web.reactive: trace
+    org.springframework.boot.autoconfigure.web: trace
+#    reactor.netty: trace

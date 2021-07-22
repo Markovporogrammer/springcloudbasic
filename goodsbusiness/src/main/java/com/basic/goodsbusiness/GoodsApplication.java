@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @EnableHystrix
 @EnableHystrixDashboard//监控工具
 public class GoodsApplication {
-    @RequestMapping("/")
-    public String home() {
-        return "按错";
-    }
+//    @RequestMapping("/")
+//    public String home() {
+//        return "按错";
+//    }
 
     public static void main(String[] args) {
 

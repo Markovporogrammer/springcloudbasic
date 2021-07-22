@@ -33,9 +33,18 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "/hello")
-    public String hello(HttpRequest httpRequest){
-        List<String> strings = httpRequest.getHeaders().get("X-Request-Id");
-        System.out.println(strings);
+    public String hello(){
+        System.out.println("hello:");
         return stockServiceClient.hello();
+    }
+    @RequestMapping(value = "/hello1")
+    public String hello1(String red){
+        System.out.println("8770----hello1:==="+red);
+        return "hello1";
+    }
+    @RequestMapping(value = "/sayHello")
+    public String sayHello(){
+
+        return "sayHello";
     }
 }

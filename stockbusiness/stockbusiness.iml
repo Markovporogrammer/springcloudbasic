@@ -142,6 +142,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: javax.activation:javax.activation-api:1.2.0" level="project" />
     <orderEntry type="module" module-name="common" />
     <orderEntry type="library" name="Maven: org.projectlombok:lombok:1.18.6" level="project" />
-    <orderEntry type="library" name="Maven: org.example:stockApi:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="module" module-name="stockApi" />
   </component>
 </module>
