@@ -2,13 +2,26 @@ package com.basic.goodsbusiness.controller;
 
 import com.basic.goodsbusiness.command.CommandHelloWorld;
 import com.basic.goodsbusiness.service.StockServiceClient;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.script.Script;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Future;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -22,6 +35,8 @@ public class GoodsController {
 
     @Autowired
     StockServiceClient stockServiceClient;
+    @Autowired
+    RestHighLevelClient highLevelClient;
 
     @RequestMapping(value = "/getStock/{data}" , method = GET)
     public String getStock(@PathVariable String data){
@@ -47,4 +62,11 @@ public class GoodsController {
 
         return "sayHello";
     }
+
+
+
+
+
+
+
 }

@@ -3,15 +3,16 @@ package com.basic.config;
 import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import reactor.core.publisher.Mono;
 
 @Configuration
 public class BeanConfig {
 
-    @Bean
-    public KeyResolver ipKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
-    }
+//    @Bean
+//    public KeyResolver ipKeyResolver() {
+//        return exchange -> Mono.just(exchange.getRequest().getRemoteAddress().getHostName());
+//    }
     /**
      * 按照Path限流
      *
@@ -25,15 +26,15 @@ public class BeanConfig {
                         .toString()
         );
     }
-
-    /**
-     * 用户的限流
-     * @return
-     */
-    @Bean
-    public KeyResolver userKeyResolver() {
-        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("user"));
-    }
+//
+//    /**
+//     * 用户的限流
+//     * @return
+//     */
+//    @Bean
+//    public KeyResolver userKeyResolver() {
+//        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("user"));
+//    }
 
 //    /**
 //     * 来源IP的限流

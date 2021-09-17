@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: stock
+  elasticsearch:
+    rest:
+      uris: http://216.24.243.69:9200
 
 eureka:
   client:

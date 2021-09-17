@@ -25,6 +25,12 @@ spring:
 #          predicates:
 #          - Weight=group1, 2
     gateway:
+      httpclient:
+        pool:
+          type: fixed
+          max-connections: 500
+          acquire-timeout: 75000
+          max-idle-time: <PUT_YOUR_VALUE_HERE>ms
       discovery:
         locator:
           enabled: true # 开启通过服务中心的自动根据 serviceId 创建路由的功能
@@ -46,7 +52,7 @@ spring:
             - name: RequestRateLimiter
               args:
                 # 使用SpEL表达式从Spring容器中获取Bean对象
-                key-resolver: '#{@ipKeyResolver}'
+                key-resolver: '#{@pathKeyResolver}'
                 # 令牌桶每秒填充平均速率
                 redis-rate-limiter.replenishRate: 1
                 # 令牌桶的上限
