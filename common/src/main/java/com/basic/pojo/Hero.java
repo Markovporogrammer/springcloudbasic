@@ -1,6 +1,7 @@
 package com.basic.pojo;
 
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 @Data
 public class Hero {

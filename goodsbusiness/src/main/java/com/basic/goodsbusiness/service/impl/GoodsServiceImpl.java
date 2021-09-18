@@ -23,6 +23,9 @@ import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 @Service
 public class GoodsServiceImpl implements GoodsService {
@@ -96,7 +98,7 @@ public class GoodsServiceImpl implements GoodsService {
         hero.setId(5);
         hero.setName("曹丕");
         hero.setCountry("魏");
-        hero.setBirthday("公元187年");
+        hero.setBirthday("公元187年445651sas");
         hero.setLongevity(39);
         IndexRequest request = new IndexRequest("hero");
         request.id(hero.getId().toString());
@@ -151,6 +153,11 @@ public class GoodsServiceImpl implements GoodsService {
         try {
             SearchResponse response = client.search(request, RequestOptions.DEFAULT);
             SearchHit[] hits = response.getHits().getHits();
+            List<Hero> herosList = new ArrayList<>(hits.length);
+            for (SearchHit hit : hits) {
+                herosList.add(JSON.parseObject(hit.getSourceAsString(), Hero.class));
+            }
+            System.out.println(herosList);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -161,7 +168,7 @@ public class GoodsServiceImpl implements GoodsService {
         SearchRequest request = new SearchRequest("hero");
         SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
-        boolQueryBuilder.must(termQuery("country", "魏"));
+        boolQueryBuilder.should(prefixQuery("country", "魏"));
         boolQueryBuilder.must(rangeQuery("longevity").gte(50));
         sourceBuilder.query(boolQueryBuilder);
         sourceBuilder.from(0).size(2);
@@ -174,12 +181,12 @@ public class GoodsServiceImpl implements GoodsService {
         } catch (IOException e) {
            // log.error("Query by Condition execution failed: {}", e.getMessage(), e);
         }
-        assert response != null;
         SearchHit[] hits = response.getHits().getHits();
         List<Hero> herosList = new ArrayList<>(hits.length);
         for (SearchHit hit : hits) {
             herosList.add(JSON.parseObject(hit.getSourceAsString(), Hero.class));
         }
+        System.out.println(herosList);
        // log.info("print info: {}, size: {}", herosList.toString(), herosList.size());
     }
 

@@ -8,7 +8,7 @@ import java.io.IOException;
  */
 public interface GoodsService {
 
-    public void createIndex() throws IOException;
+    void createIndex() throws IOException;
 
     public void bulkRequestTest() throws IOException;
 
