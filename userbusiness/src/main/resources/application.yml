@@ -1,0 +1,12 @@
+server:
+  port: 8111
+spring:
+  datasource:
+    url: jdbc:mysql://49.232.135.209:3306/userbusiness?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: wmzh123@qwe
+debug: true
+mybatis:
+  type-aliases-package: com.basic.pojo.user
+  config-location: classpath:mybatis.xml
+  mapper-locations: classpath*:com.basic.userBusiness.mapper/**/**.xml

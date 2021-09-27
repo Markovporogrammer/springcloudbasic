@@ -5,11 +5,11 @@ spring:
     name: goods
   data:
     elasticsearch:
-      cluster-name: docker-cluster
-      cluster-nodes: 216.24.243.69:9300
+      cluster-name: elasticsearch
+      cluster-nodes: 49.232.135.209:9300
   elasticsearch:
     rest:
-      uris: ["http://216.24.243.69:9200"]
+      uris: ["http://49.232.135.209:9200"]
 eureka:
   client:
     register-with-eureka: true

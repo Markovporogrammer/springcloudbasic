@@ -3,7 +3,13 @@ server:
 spring:
   application:
     name: goods
-
+  data:
+    elasticsearch:
+      cluster-name: docker-cluster
+      cluster-nodes: 216.24.243.69:9300
+  elasticsearch:
+    rest:
+      uris: ["http://216.24.243.69:9200"]
 eureka:
   client:
     register-with-eureka: true
