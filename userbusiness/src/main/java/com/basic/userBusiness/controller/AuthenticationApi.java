@@ -36,7 +36,6 @@ public class AuthenticationApi {
         } else {
             String token = authenticationService.getToken(userInDataBase);
             jsonObject.put("token", token);
-            jsonObject.put("user", userInDataBase);
         }
         return jsonObject;
     }

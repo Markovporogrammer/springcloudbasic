@@ -1,5 +1,6 @@
 package com.basic.userBusiness.service;
 
+import com.basic.pojo.user.SysUser;
 import com.basic.pojo.user.User;
 import com.basic.userBusiness.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import java.security.NoSuchAlgorithmException;
 public class UserService {
     @Autowired
     private UserMapper userMapper;
-
 
 
     public User add(User user) {
